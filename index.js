@@ -11,12 +11,26 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(cors());
 const upload = multer({storage});
 
+// single file upload in cloudinary
 app.post("/image-upload", upload.single('file_name'), (req, res) => {
     res.json({
         url: req.file.path,
-        filename:req.file.filename
+        filename:req.file.filename,
+        originalname:image.originalname
     });
 })
+
+//Multiple files upload using cloudinary, 
+app.post("/multiple_images-upload", upload.array("file_name", 20), (req, res) => {
+    const result = req.files.map((image) => {
+        return {
+            url: image.path,
+            filename:image.filename,
+            originalname:image.originalname
+        }
+    })
+    return res.json(result);
+  })
 
 app.post("/delete_image", async (req, res) => {
    try {
