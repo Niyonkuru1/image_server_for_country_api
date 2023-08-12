@@ -26,13 +26,14 @@ app.post("/multiple_images-upload", upload.array("file_name", 20), (req, res) =>
         return {
             url: image.path,
             filename:image.filename,
-            originalname:image.originalname
         }
     })
     return res.json(result);
   })
 
 app.post("/delete_image", async (req, res) => {
+    // cloudinary.v2.api.delete_resources(['image1', 'image2'],
+//   function(error, result){console.log(result);});
    try {
        await cloudinary.uploader.destroy(req.body.filename);
        res.json({
