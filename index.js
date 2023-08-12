@@ -48,7 +48,8 @@ app.post("/delete_image", async (req, res) => {
        });
    }
 })
+const port = process.env.PORT || 2000;
 
-app.listen(2000, () => console.log(
-    "server stated at port 2000"
+app.listen(port, () => console.log(
+    `server stated at port ${port}`
 ))
